@@ -1,8 +1,6 @@
-package com.cusca.products.models;
+package com.cusca.order.Dto;
 
-
-public class ProductModel {
-
+public class ProductDto {
 
     private Long id;
     private String title;
@@ -10,7 +8,17 @@ public class ProductModel {
     private String description;
     private String category;
     private String image;
-    private RatingModel Rating;
+    private RatingDto Rating;
+
+    public ProductDto(Long id, String title, Double price, String description, String category, String image, RatingDto rating) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
+        this.description = description;
+        this.category = category;
+        this.image = image;
+        Rating = rating;
+    }
 
     public Long getId() {
         return id;
@@ -60,13 +68,11 @@ public class ProductModel {
         this.image = image;
     }
 
-    public RatingModel getRating() {
+    public RatingDto getRating() {
         return Rating;
     }
 
-    public void setRating(RatingModel rating) {
+    public void setRating(RatingDto rating) {
         Rating = rating;
     }
 }
-
-
