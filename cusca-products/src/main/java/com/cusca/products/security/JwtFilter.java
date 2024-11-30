@@ -36,7 +36,7 @@ public class JwtFilter extends OncePerRequestFilter {
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType("application/json");
-            response.getWriter().write("{\"error\":\"Token no proporcionado o inválido\"}");
+            response.getWriter().write("{\"error\":\"No token found or invalid token\"}");
             return;
         }
 
@@ -59,12 +59,12 @@ public class JwtFilter extends OncePerRequestFilter {
         } catch (ExpiredJwtException e) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType("application/json");
-            response.getWriter().write("{\"error\":\"Token expirado\"}");
+            response.getWriter().write("{\"error\":\"Expired token\"}");
             return;
         } catch (JwtException e) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType("application/json");
-            response.getWriter().write("{\"error\":\"Token inválido\"}");
+            response.getWriter().write("{\"error\":\"Invalid token\"}");
             return;
         }
 

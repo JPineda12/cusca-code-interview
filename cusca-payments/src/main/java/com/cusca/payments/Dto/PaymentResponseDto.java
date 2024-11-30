@@ -1,4 +1,4 @@
-package com.cusca.payments.dtos;
+package com.cusca.payments.Dto;
 
 import java.util.List;
 
