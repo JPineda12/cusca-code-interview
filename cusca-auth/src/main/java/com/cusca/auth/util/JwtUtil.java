@@ -22,6 +22,10 @@ public class JwtUtil {
     public String generateToken(UserModel user) {
         return Jwts.builder()
                 .setSubject(user.getUsername())
+                .claim("id", user.getId())
+                .claim("email", user.getEmail())
+                .claim("name", user.getName())
+                .claim("phone", user.getPhone())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 1000)) // Expiración de una hora
                 .signWith(secretKey)

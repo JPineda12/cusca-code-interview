@@ -27,6 +27,7 @@ public class AuthService {
         if (user == null) {
             throw new RuntimeException("Credenciales inválidas");
         }
+
         return jwtUtil.generateToken(user);
     }
 }
