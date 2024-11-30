@@ -1,9 +1,9 @@
 package com.cusca.payments.controllers;
 
 import com.cusca.payments.client.OrderClient;
-import com.cusca.payments.dtos.PaymentRequestDto;
-import com.cusca.payments.dtos.PaymentResponseDto;
-import com.cusca.payments.dtos.ProductDto;
+import com.cusca.payments.Dto.PaymentRequestDto;
+import com.cusca.payments.Dto.PaymentResponseDto;
+import com.cusca.payments.Dto.ProductDto;
 import com.cusca.payments.services.PaymentService;
 import com.cusca.payments.utils.JwtUtil;
 import org.springframework.http.HttpStatus;

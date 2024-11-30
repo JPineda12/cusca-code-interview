@@ -1,7 +1,7 @@
 package com.cusca.payments.client;
 
-import com.cusca.payments.dtos.OrderDto;
-import com.cusca.payments.dtos.ProductDto;
+import com.cusca.payments.Dto.OrderDto;
+import com.cusca.payments.Dto.ProductDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

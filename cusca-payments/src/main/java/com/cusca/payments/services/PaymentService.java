@@ -1,6 +1,6 @@
 package com.cusca.payments.services;
 
-import com.cusca.payments.dtos.PaymentRequestDto;
+import com.cusca.payments.Dto.PaymentRequestDto;
 import org.springframework.stereotype.Service;
 
 @Service
