@@ -27,7 +27,7 @@ public class JwtUtil {
                 .claim("name", user.getName())
                 .claim("phone", user.getPhone())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 1000)) // Expiración de una hora
+                .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 1000)) // Token expires in 1 hour
                 .signWith(secretKey)
                 .compact();
     }

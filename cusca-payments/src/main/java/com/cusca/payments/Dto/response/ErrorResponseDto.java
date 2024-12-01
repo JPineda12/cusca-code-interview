@@ -1,4 +1,4 @@
-package com.cusca.products.dto;
+package com.cusca.payments.dto.response;
 
 
 import java.time.LocalDateTime;

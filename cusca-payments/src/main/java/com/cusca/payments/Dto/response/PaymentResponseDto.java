@@ -1,4 +1,6 @@
-package com.cusca.payments.Dto;
+package com.cusca.payments.dto.response;
+
+import com.cusca.payments.dto.ProductDto;
 
 import java.util.List;
 

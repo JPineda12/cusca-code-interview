@@ -1,24 +1,27 @@
-package com.cusca.payments.Dto;
+package com.cusca.order.dto.Response;
 
+import com.cusca.order.dto.ProductDto;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class ErrorResponseDto {
+public class OrderResponseDto {
 
     private String message;
-    private int statusCode;
+    private ProductDto product;
     private String timestamp;
 
-    public ErrorResponseDto(String message, int statusCode) {
+    public OrderResponseDto(String message, ProductDto product) {
         this.message = message;
-        this.statusCode = statusCode;
+        this.product = product;
         this.timestamp = getFormattedTimestamp();
     }
+
     private String getFormattedTimestamp() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return LocalDateTime.now().format(formatter);
     }
+
     public String getMessage() {
         return message;
     }
@@ -27,12 +30,12 @@ public class ErrorResponseDto {
         this.message = message;
     }
 
-    public int getStatusCode() {
-        return statusCode;
+    public ProductDto getProduct() {
+        return product;
     }
 
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
+    public void setProduct(ProductDto product) {
+        this.product = product;
     }
 
     public String getTimestamp() {

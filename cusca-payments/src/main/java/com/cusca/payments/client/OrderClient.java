@@ -1,12 +1,10 @@
 package com.cusca.payments.client;
 
-import com.cusca.payments.Dto.OrderDto;
-import com.cusca.payments.Dto.ProductDto;
+import com.cusca.payments.config.CustomException;
+import com.cusca.payments.dto.OrderDto;
+import com.cusca.payments.dto.ProductDto;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -31,12 +29,16 @@ public class OrderClient {
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<OrderDto> response = restTemplate.exchange(this.ordersApiUrl, HttpMethod.GET, entity, OrderDto.class);
+        try {
+            ResponseEntity<OrderDto> response = restTemplate.exchange(this.ordersApiUrl, HttpMethod.GET, entity, OrderDto.class);
 
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return response.getBody().getProducts();
-        } else {
-            return null;
+            if (response.getStatusCode().is2xxSuccessful()) {
+                return response.getBody().getProducts();
+            } else {
+                throw new CustomException(HttpStatus.NOT_ACCEPTABLE, "Unsuccessful response from Products Api");
+            }
+        }catch(Exception e){
+            throw new CustomException(HttpStatus.NOT_ACCEPTABLE, "Couldn't reach Orders Api, connection refused at"+ordersApiUrl);
         }
     }
 }

@@ -1,9 +1,11 @@
 package com.cusca.order.controllers;
 
 
+import com.cusca.order.dto.Response.OrderResponseDto;
 import com.cusca.order.models.Order;
 import com.cusca.order.services.OrderService;
 import com.cusca.order.utils.JwtUtil;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -26,9 +28,9 @@ public class OrderController {
     }
 
     @PostMapping("/add/{productId}")
-    public void addProductToOrder(@RequestHeader("Authorization") String token, @PathVariable Long productId) {
+    public ResponseEntity<OrderResponseDto> addProductToOrder(@RequestHeader("Authorization") String token, @PathVariable Long productId) {
         Long userId = jwtUtil.extractUserId(token);
-        orderService.addProductToOrder(userId, productId, token);
+        return ResponseEntity.ok(orderService.addProductToOrder(userId, productId, token));
     }
 
     @GetMapping

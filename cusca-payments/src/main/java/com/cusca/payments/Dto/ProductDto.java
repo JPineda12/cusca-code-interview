@@ -1,4 +1,4 @@
-package com.cusca.payments.Dto;
+package com.cusca.payments.dto;
 
 public class ProductDto {
 

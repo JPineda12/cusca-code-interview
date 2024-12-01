@@ -1,7 +1,10 @@
 package com.cusca.auth.controllers;
 
+import com.cusca.auth.dto.Request.UserRequestDto;
 import com.cusca.auth.services.AuthService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
+@Validated
 public class AuthController {
     private final AuthService authService;
 
@@ -20,8 +24,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
-        String token = authService.authenticate(credentials.get("username"), credentials.get("password"));
+    public ResponseEntity<?> login(@Valid @RequestBody UserRequestDto user) {
+        String token = authService.authenticate(user);
         return ResponseEntity.ok(Collections.singletonMap("token", token));
     }
 }

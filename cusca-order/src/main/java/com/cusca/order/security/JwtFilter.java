@@ -39,7 +39,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         String token = authorizationHeader.substring(7);
-        logger.info("Token recibido: " + token);
+        logger.info("Received Token: " + token);
         try {
             Claims claims = Jwts.parserBuilder()
                     .setSigningKey(jwtUtil.getSecretKey())

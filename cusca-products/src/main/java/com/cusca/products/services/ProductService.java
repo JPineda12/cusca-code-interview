@@ -1,6 +1,8 @@
 package com.cusca.products.services;
 
+import com.cusca.products.config.CustomException;
 import com.cusca.products.models.ProductModel;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -15,7 +17,8 @@ import java.util.List;
 public class ProductService {
 
     private final RestTemplate restTemplate;
-    private final String API_URL = "https://fakestoreapi.com/products";
+    @Value("${fakestore.api.url}")
+    private String FAKE_STORE_API_URL;
 
     public ProductService(RestTemplateBuilder restTemplate) {
         this.restTemplate = restTemplate.build();
@@ -23,7 +26,7 @@ public class ProductService {
 
     public List<ProductModel> listProducts(Integer limit, String sort) {
         String url = UriComponentsBuilder
-                .fromUriString(API_URL)
+                .fromUriString(FAKE_STORE_API_URL)
                 .queryParam("limit", limit)
                 .queryParam("sort", sort)
                 .toUriString();
@@ -33,13 +36,22 @@ public class ProductService {
     }
 
     public ProductModel product(Long id) {
-        return restTemplate.getForObject(API_URL + "/" + id, ProductModel.class);
+        try {
+            ProductModel product = restTemplate.getForObject(FAKE_STORE_API_URL + "/" + id, ProductModel.class);
+
+            if (product.getId() == null || product.getId() <= 0) {
+                throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "Product with id " + id + " not found");
+            }
+            return restTemplate.getForObject(FAKE_STORE_API_URL + "/" + id, ProductModel.class);
+        }catch(Exception e){
+            throw new CustomException(HttpStatus.NOT_FOUND, "Product with id " + id + " not found");
+        }
     }
 
 
     public ProductModel createProduct(ProductModel entity){
 
-        return restTemplate.postForObject(API_URL, entity, ProductModel.class);
+        return restTemplate.postForObject(FAKE_STORE_API_URL, entity, ProductModel.class);
     }
 
     public ProductModel updateProduct(Long id, ProductModel updatedEntity){
@@ -48,28 +60,28 @@ public class ProductService {
 
         HttpEntity<ProductModel> requestEntity = new HttpEntity<>(updatedEntity, headers);
         ResponseEntity<ProductModel> responseEntity =
-                restTemplate.exchange(API_URL+"/"+id, HttpMethod.PUT, requestEntity, ProductModel.class);
+                restTemplate.exchange(FAKE_STORE_API_URL+"/"+id, HttpMethod.PUT, requestEntity, ProductModel.class);
 
         return responseEntity.getBody();
     }
 
     public Boolean deleteProduct(Long id){
         try {
-            restTemplate.delete(API_URL + "/" + id);
+            restTemplate.delete(FAKE_STORE_API_URL + "/" + id);
             return true;
         }
         catch(HttpClientErrorException e) {
-            throw new IllegalArgumentException("Product with ID " + id + " not found.");
+            throw new CustomException(HttpStatus.BAD_REQUEST,"Product with ID " + id + " not found.");
         }
     }
 
     public List<String> categories(){
-        String[] categories = restTemplate.getForObject(API_URL+"/categories", String[].class);
+        String[] categories = restTemplate.getForObject(FAKE_STORE_API_URL+"/categories", String[].class);
         return Arrays.asList(categories);
     }
 
     public List<ProductModel> productsByCategory(String categoryName){
-        ProductModel[] products = restTemplate.getForObject(API_URL+"/category/"+categoryName, ProductModel[].class);
+        ProductModel[] products = restTemplate.getForObject(FAKE_STORE_API_URL+"/category/"+categoryName, ProductModel[].class);
         return Arrays.asList(products);
     }
 }

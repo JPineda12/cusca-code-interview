@@ -20,11 +20,11 @@ public class UserService {
         try {
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream("users.json");
             if (inputStream == null) {
-                throw new RuntimeException("Archivo users.json no encontrado");
+                throw new RuntimeException("Json file not found");
             }
             users = Arrays.asList(objectMapper.readValue(inputStream, UserModel[].class));
         } catch (IOException e) {
-            throw new RuntimeException("Error al leer el archivo JSON", e);
+            throw new RuntimeException("Error parsing JSON", e);
         }
     }
 

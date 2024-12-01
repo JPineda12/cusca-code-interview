@@ -1,6 +1,6 @@
 package com.cusca.order.models;
 
-import com.cusca.order.Dto.ProductDto;
+import com.cusca.order.dto.ProductDto;
 
 import java.util.List;
 

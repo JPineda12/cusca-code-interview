@@ -1,4 +1,4 @@
-package com.cusca.order.Dto;
+package com.cusca.order.dto;
 
 public class ProductDto {
 
